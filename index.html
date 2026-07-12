@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petal & Ink</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <clipPath id="none"></clipPath>
+  </defs>
+</svg>
+
+<div class="blob" style="width:340px;height:340px;background:var(--petal);top:-100px;left:-80px;"></div>
+<div class="blob" style="width:300px;height:300px;background:var(--lavender);bottom:-90px;right:-60px;"></div>
+<div class="blob" style="width:220px;height:220px;background:var(--sage);top:40%;right:10%;opacity:0.3;"></div>
+
+<div id="app">
+
+  <!-- ============ LANDING ============ -->
+  <div class="screen active" id="screen-landing">
+    <div>
+      <svg class="landing-mark" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" fill="var(--gold)"/>
+        <path d="M32 18c3 3 3 8 0 11 -3-3-3-8 0-11z" fill="#fff" opacity="0.9"/>
+        <path d="M32 46c3-3 3-8 0-11 -3 3-3 8 0 11z" fill="#fff" opacity="0.9"/>
+        <path d="M18 32c3-3 8-3 11 0 -3 3-8 3-11 0z" fill="#fff" opacity="0.9"/>
+        <path d="M46 32c-3-3-8-3-11 0 3 3 8 3 11 0z" fill="#fff" opacity="0.9"/>
+      </svg>
+      <h1 class="landing-title font-display">Petal &amp; Ink</h1>
+      <p class="landing-tag">letters, dressed up in bloom</p>
+      <div class="landing-card">
+        <label class="field-label" for="name-input">What should we call you?</label>
+        <input class="text-input" id="name-input" placeholder="Your name" maxlength="30">
+        <button class="btn-primary" style="width:100%" id="begin-btn">Begin a letter →</button>
+        <div class="landing-divider">or</div>
+        <button class="btn-ghost" style="width:100%" id="have-code-btn">I have a letter to open</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ VIEWER ENTRY ============ -->
+  <div class="screen" id="screen-viewer-entry">
+    <div>
+      <h1 class="landing-title font-display" style="font-size:32px">Open a letter</h1>
+      <p class="landing-tag">enter the code someone sent you</p>
+      <div class="landing-card">
+        <label class="field-label" for="code-input">Letter code</label>
+        <input class="text-input" id="code-input" placeholder="e.g. 8f2a-91cd">
+        <button class="btn-primary" style="width:100%" id="open-code-btn">Open →</button>
+        <div style="margin-top:16px;">
+          <button class="btn-ghost" id="back-to-landing-btn">← Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD ============ -->
+  <div class="screen" id="screen-dashboard">
+    <div class="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" fill="var(--gold)"/><path d="M32 18c3 3 3 8 0 11 -3-3-3-8 0-11z" fill="#fff" opacity="0.9"/><path d="M32 46c3-3 3-8 0-11 -3 3-3 8 0 11z" fill="#fff" opacity="0.9"/><path d="M18 32c3-3 8-3 11 0 -3 3-8 3-11 0z" fill="#fff" opacity="0.9"/><path d="M46 32c-3-3-8-3-11 0 3 3 8 3 11 0z" fill="#fff" opacity="0.9"/></svg>
+        Petal &amp; Ink
+      </div>
+      <button class="btn-ghost" id="open-code-from-dash-btn">Open a letter with a code</button>
+    </div>
+    <div class="dash-main">
+      <div class="dash-heading">
+        <h1 class="font-display" id="dash-greeting">Your letters</h1>
+        <button class="btn-primary" id="new-letter-btn">+ New letter</button>
+      </div>
+      <div id="letters-grid" class="letters-grid"></div>
+    </div>
+  </div>
+
+  <!-- ============ EDITOR ============ -->
+  <div class="screen" id="screen-editor">
+    <div class="editor-wrap">
+      <div class="editor-rail">
+        <button class="btn-ghost" id="back-to-dash-btn" style="margin-bottom:18px;">← All letters</button>
+
+        <div class="rail-section">
+          <span class="rail-label">Scene</span>
+          <div class="scene-options" id="scene-options"></div>
+        </div>
+
+        <div class="rail-section">
+          <span class="rail-label">Accent color</span>
+          <div class="color-options" id="color-options"></div>
+        </div>
+
+        <div class="rail-section">
+          <span class="rail-label">Stickers — click to place</span>
+          <div class="sticker-grid" id="sticker-grid"></div>
+        </div>
+
+        <div class="rail-section">
+          <span class="rail-label">Reveal animation</span>
+          <div class="anim-options" id="anim-options"></div>
+        </div>
+      </div>
+
+      <div class="editor-preview-col">
+        <div class="preview-frame" id="preview-frame">
+          <div class="preview-canvas" id="preview-canvas">
+            <div class="preview-text-area">
+              <h3 class="preview-title-txt" id="preview-title-txt"></h3>
+              <div class="preview-body-txt" id="preview-body-txt"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-controls">
+          <input class="letter-title-input" id="title-input" placeholder="A little heading… (e.g. Open when you graduate)">
+          <textarea class="letter-body-input" id="body-input" placeholder="Write from the heart…"></textarea>
+        </div>
+
+        <div class="editor-actions">
+          <button class="btn-ghost" id="save-draft-btn">Save draft</button>
+          <button class="btn-primary" id="get-link-btn">Save &amp; get share link</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ VIEWER (reveal) ============ -->
+  <div class="screen" id="screen-viewer">
+    <div class="viewer-stage" id="viewer-stage">
+      <div class="envelope" id="envelope">
+        <div class="envelope-body"></div>
+        <div class="envelope-flap"></div>
+        <div class="wax-seal">✦</div>
+      </div>
+      <div class="viewer-letter" id="viewer-letter">
+        <div class="preview-text-area" style="top:14%;bottom:14%;">
+          <h3 class="preview-title-txt" id="viewer-title-txt"></h3>
+          <div class="preview-body-txt" id="viewer-body-txt"></div>
+        </div>
+      </div>
+    </div>
+    <p style="color:var(--plum-soft);font-size:13px;margin-top:14px;" id="viewer-hint">tap the envelope to open</p>
+  </div>
+
+</div>
+
+<!-- ============ SHARE MODAL ============ -->
+<div class="modal-overlay" id="share-modal">
+  <div class="modal-card">
+    <h2 class="font-display" style="margin:0 0 6px;">Ready to send 💌</h2>
+    <p style="color:var(--plum-soft);font-size:14px;margin:0 0 6px;">Share this code, or the link — either opens the reveal.</p>
+    <div class="code-display" id="modal-code"></div>
+    <button class="btn-primary" id="copy-link-btn" style="width:100%;margin-bottom:10px;">Copy link</button>
+    <button class="btn-ghost" id="close-modal-btn" style="width:100%;">Done</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
